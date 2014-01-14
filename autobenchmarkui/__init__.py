@@ -76,9 +76,7 @@ def radiator(days):
     # kwargs['metric'] = kwa
     # kwargs['benchma'] = 'Autopilot'
     # kwargs['machinename'] = 'TESTLAB-TA-REC'
-    response = make_response(render_template('radiator.html', **kwargs))
-    response.headers['Access-Control-Allow-Origin'] = "*"
-    return response
+    return render_template('radiator.html', **kwargs)
 
 
 @app.route('/machine/<machinename>')
