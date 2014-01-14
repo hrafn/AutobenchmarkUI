@@ -4,7 +4,7 @@ import os
 import sys
 
 import bson
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, make_response
 from flask.ext.cache import Cache
 
 import config
@@ -30,6 +30,12 @@ def round_date(dt):
     # Zero out hour/min/sec/etc and return isostr
     return rounded.isoformat()
 
+def responsify(raw_json):
+    response_json = jsonify(raw_json)
+    response = make_response(response_json)
+    response.headers['Access-Control-Allow-Origin'] = "*"
+    return response
+
 @cache.cached(timeout=30)
 @app.route('/thumbjson')
 def thumbjson():
@@ -48,12 +54,14 @@ def thumbjson():
     # Just mutate the original results since we're throwing them away.
     result = all_json
     result['results'] = all_results
-    return jsonify(result)
+
+    return responsify(result)
+
 
 @cache.cached(timeout=30)
 @app.route('/scatterjson')
 def scatterjson():
-    return jsonify(get_graph_data_from_request(request, DETAIL_DAYS))
+    return responsify(get_graph_data_from_request(request, DETAIL_DAYS))
 
 
 @app.route('/')
@@ -125,7 +133,7 @@ def executionjson(id_):
             'mode': "{0:.3f}".format(floatliststatistics.get_mode(result_values)),
         }
     }
-    return jsonify(result)
+    return responsify(result)
 
 
 @app.route('/execution/<id_>')
