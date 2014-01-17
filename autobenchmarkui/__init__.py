@@ -11,6 +11,7 @@ import config
 import dbmath
 import dbmodel
 import floatliststatistics
+import urlparse
 
 CONNDATA = None
 
@@ -68,6 +69,8 @@ def radiator(days):
     # kwargs['metric'] = kwa
     # kwargs['benchma'] = 'Autopilot'
     # kwargs['machinename'] = 'TESTLAB-TA-REC'
+    parseresult = urlparse.urlparse(request.url)
+    kwargs['parentURL'] = '%s://%s' % (parseresult[0], parseresult[1])
     return render_template('radiator.html', **kwargs)
 
 

@@ -42,8 +42,8 @@
                     <script type="text/javascript">
                         DrawGraph(
                             DrawRadiatorGraph,
-                            '/thumbjson{{ urltail }}',
-                            '<a href="/detail{{ urltail }}' + '">' + '<span style="color:#000000;font-size:300%;">{{ item }} <br /> {{ metric }} for {{ bench }} on {{ machinename }}</span>' + '</a>',
+                            '{{ parentURL }}/thumbjson{{ urltail }}',
+                            '<a href="/detail{{ urltail }}"><span style="color:#000000;font-size:300%;">{{ item }} <br /> {{ metric }} for {{ bench }} on {{ machinename }}</span></a>',
                             'id_radiator',
                             '{{ metric + machinename + bench}}'
                         )
